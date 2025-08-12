@@ -1,0 +1,70 @@
+%jugador(Jugador)
+jugador(rojo).
+jugador(amarillo).
+jugador(verde).
+jugador(azul).
+%ubicadoEn(Pais,Continente)
+ubicadoEn(argentina,americaDelSur).
+ubicadoEn(brasil,americaDelSur).
+ubicadoEn(estadosUnidos,americaDelNorte).
+ubicadoEn(espania,europa).
+ubicadoEn(japon,asia).
+ubicadoEn(hungria,europa).
+ubicadoEn(portugal,europa).
+%aliados(UnJugador,OtroJugador)
+aliados(rojo,amarillo).
+aliados(verde,azul).
+aliados(verde,amarillo).
+%ocupa(Jugador,Pais)
+ocupa(rojo,argentina).
+ocupa(verde,brasil).
+ocupa(rojo,hungria).
+%limitrofes(UnPais,OtroPais)
+limitrofes(argentina,brasil).
+limitrofes(portugal,espania).
+%1
+tienePresenciaEn(Jugador,Continente):-
+    ocupa(Jugador,Pais),
+    ubicadoEn(Pais,Continente).
+%2
+puedenAtarcarse(Jugador,OtroJugador):-
+    ocupa(Jugador,Pais),
+    ocupa(OtroJugador,OtroPais),
+    limitrofes(Pais,OtroPais).
+%3
+sinTensiones(Jugador,OtroJugador):-
+    jugador(Jugador),jugador(OtroJugador),
+    not(puedenAtarcarse(Jugador,OtroJugador)).
+
+sinTensiones(Jugador,OtroJugador):-
+    aliados(Jugador,OtroJugador).
+%4
+perdio(Jugador):-
+    jugador(Jugador),
+    not(ocupa(Jugador,_)).
+%5
+controla(Jugador,Continente):-
+    jugador(Jugador),ubicadoEn(_,Continente),
+    forall(ubicadoEn(Pais,Continente),ocupa(Jugador,Pais)).
+
+controla2(Jugador,Continente):-
+    jugador(Jugador),ubicadoEn(_,Continente),
+    not(ubicadoEn(Pais,Continente)),not(ocupa(Jugador,Pais)).
+%6
+renido(Continente):-
+    ubicadoEn(_,Continente),
+    forall(jugador(Jugador),tienePresenciaEn(Jugador,Continente)).
+%7
+atrincherado(Jugador):-
+    jugador(Jugador),ubicadoEn(_,Continente),
+   forall(ocupa(Jugador,Pais),ubicadoEn(Pais,Continente)).
+%8
+puedeConquistar(Jugador,Continente):-
+    jugador(Jugador),ubicadoEn(_,Continente),
+    not(controla(Jugador,Continente)),
+    forall((ubicadoEn(Pais,Continente),not(ocupa(Jugador,Pais))),puedenAtacar(Jugador,Pais)).
+
+puedenAtacar(Jugador,PaisAtacado):-
+    ocupa(Jugador,UnPais),
+    limitrofes(UnPais,PaisAtacado),
+    not((aliados(Jugador,OtroJugador),ocupa(OtroJugador,PaisAtacado))).
