@@ -79,9 +79,6 @@ complicado(Persona):-
         not(habla(Persona,Idioma))
     )
     ).
-estaComplicado(basico,500).
-estaComplicado(intermedio,1500).
-estaComplicado(avanzado,1500).
 
 complicado(Persona):-
     nivelActual(Persona,Nivel),
@@ -89,8 +86,26 @@ complicado(Persona):-
     capital(Persona,Capital),
     Capital < Limite.
 
+estaComplicado(basico,500).
+estaComplicado(intermedio,1500).
+estaComplicado(avanzado,1500).
+% 5 
+homogeneo(Nivel):-
+    tarea(Nivel,buscar(Objeto,_)),
+    findall(O, tarea(Nivel,buscar(O,_)), Objetos),
+    listaConUnicoElemento(Objetos,Objeto).
 
+listaConUnicoElemento(Lista,Objeto):-
+    Lista = [Objeto|Objetos],
+    forall(member(E,Objetos), E = Objeto).
 
+% 6
+poliglota(Persona):-
+    habla(Persona,_),
+    findall(I,habla(Persona,I),Idiomas),
+    length(Idiomas, Longitud),
+    Longitud >= 3.
+    
     
     
   
