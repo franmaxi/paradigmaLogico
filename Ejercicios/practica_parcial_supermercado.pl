@@ -21,13 +21,13 @@ obsesivo2(Cliente) :-
   marca(_, Marca),
   forall( compro(Cliente, Producto), marca(Producto, Marca) ).
 /*
-
+  No es inversible 
 */
 obsesivo3(Cliente) :- 
   marca(Producto, _), 
   forall( compro(Cliente, Producto), marca(Producto, Marca) ).
 /*
-  
+  Los 3 productos fueron comprados
 */
 
 obsesivo4(Cliente):-

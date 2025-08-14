@@ -4,6 +4,8 @@ viaja(fran, tren(retiroRosario, 90)).
 viaja(fran, avion(aerolineas, 90, domestico)).
 viaja(fran, tren(cabaLujan, 70)).
 viaja(lucia, avion(united, 300, internacional)).
+viaja(melina,tren(ramosCiudadela,100)).
+viaja(melina,tren(sarmiento,100)).
 
 
 noEsSustentable(Persona):-
@@ -24,10 +26,19 @@ noEsSustentable(Persona):-
     Luego calcula la longitud de las 3 listas
     y pregunta si CTodos (Todos los medios de transporte) es igual a la suma entre viajes de avion y de tren.
 
-    Basicamente esta preguntando si la Persona realizo un viaje en bicicleta
 
     No es sustentable si utiliza aviones internacionales o trenes
 */
 
-noEsSustentable(Persona):-
+noEsSustentable2(Persona):-
+  forall(viaja(Persona,Transporte), Transporte = tren(_,_)).
+
+noEsSustentable2(Persona):-
+  forall(viaja(Persona,Transporte), Transporte = avion(_,_,internacional)).
+
+
+/*
+  El problema en este ejercicio fue entender el predicado xd, esta es mucho mas legible, no cumple con que sea inversible pero
+  tampoco lo que el predicado original.
+*/  
     

@@ -79,3 +79,13 @@ jugador(Jugador):-
     forall(paisContinente(Pais,Continente),ocupa(Pais,Jugador,_)).
 
 % 4
+% leFaltaMucho(Jugador,Continente):-
+%     continente(Continente),
+%     findall(C,contiwnente(Continente),Continentes),
+
+
+% 5 
+sonLimitrofes(UnPais,OtroPais):-
+    limitrofes(Limitrofes),
+    member(UnPais,Limitrofes),
+    member(OtroPais,Limitrofes).
