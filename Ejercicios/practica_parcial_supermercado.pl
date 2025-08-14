@@ -27,7 +27,9 @@ obsesivo3(Cliente) :-
   marca(Producto, _), 
   forall( compro(Cliente, Producto), marca(Producto, Marca) ).
 /*
-  Los 3 productos fueron comprados
+  Estamos ligando Cliente y Producto, por ende dejan de ser variables libres por ende el forall ni funciona
+  seria lo mismo que
+  compro(Cliente, Producto)
 */
 
 obsesivo4(Cliente):-

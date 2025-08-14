@@ -28,6 +28,9 @@ noEsSustentable(Persona):-
 
 
     No es sustentable si utiliza aviones internacionales o trenes
+
+    No utiliza polimorfismo porque aunque sea de distinto tipos estamos haciendo una lista y despues sacarle la longitud, 
+    no lo estamos implementado.
 */
 
 noEsSustentable2(Persona):-
@@ -37,8 +40,16 @@ noEsSustentable2(Persona):-
   forall(viaja(Persona,Transporte), Transporte = avion(_,_,internacional)).
 
 
-/*
-  El problema en este ejercicio fue entender el predicado xd, esta es mucho mas legible, no cumple con que sea inversible pero
-  tampoco lo que el predicado original.
-*/  
-    
+
+viajeNoSustentable(tren(_,_)).
+viajeNoSustentable(avion(_,_,internacional)).
+
+noEsSustentable3(Persona):-
+  viaja(Persona,_),
+  forall(viaja(Persona,Transporte), viajeNoSustentable(Transporte)).
+
+  /*
+    En esta solucion estamos utilizando polimorfismo, estamos implementando functores y utilizando la implementacion 
+    de Transporte.
+  
+  */

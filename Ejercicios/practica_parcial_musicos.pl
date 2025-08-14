@@ -18,7 +18,7 @@ bandaPosible(Musicos, Genero):-
     findall(Instrumento,
     instrumentoDeAlgunMusico(Musicos, Instrumento), 
     InstrumentosDisponibles),  
-    cubreTodos(InstrumentosRequeridos, InstrumentosDisponibles).  
+    cubreTodos(InstrumentosRequeridos, InstrumentosDisponibles). 
 
 instrumentoDeAlgunMusico(Musicos, Instrumento):-  
     member(Musico, Musicos), 
@@ -28,23 +28,21 @@ cubreTodos(InstrumentosRequeridos, InstrumentosDisponibles):-
     forall(member(Instrumento, InstrumentosRequeridos), 
     member(Instrumento, InstrumentosDisponibles)).
 
-
-bandaPosible2(G, B):-  
-   	instrumentosRequeridosParaBandaDe(B, I),  
- 	forall(instrumentoDeAlgunMusico(G, II),member(II,I)).
+% Esta ahora si funciona correctamente
+bandaPosible2(Musicos, Genero):-  
+   	instrumentosRequeridosParaBandaDe(Genero, InstrumentosDisponibles),  
+ 	forall(member(Instrumento,InstrumentosRequeridos),instrumentoDeAlgunMusico(Musicos, Instrumento)).
 
 /*
-    - Si bandaPosible2 es correcta y funciona perfectamente, 
-    - En terminos de expresividad: Es menos expresivda pues las variables utilizadas no "significan" nada, no podemos saber a que se refiere
-    - En terminos de declaratividad : Es igual que declarativa que la original, ambas usan un forall y utilizan el predicado instrumentosRequeridosParaBandaDe
-    - En terminos de inversibilidad : Ambas no son inversible, pues G o Musicos llega sin ligar y se las utiliza por primera vez dentro de un forall.
+    - No funciona correctamente pues el subconjunto era los instrumentos disponibles, y esto esta mal, el subconjunto
+        tiene que ser sobre los instrumentos requeridos.
+    - En terminos de expresividad: Es menos expresiva pues las variables utilizadas no "significan" nada, no podemos saber a que se refiere
+    - En terminos de declaratividad : La segunda opcion es mas declarativa pues en la primer opcion estamos forzando la utilizacion de listas
+        mientras que en la segunda es mucho mas directo. 
+    - En terminos de inversibilidad : Ambas no son totalmente inversible, pues G o Musicos llega sin ligar y se las utiliza por primera vez dentro de un forall.
     - Ejemplos 
     bandaPosible([luis,maria,juan],rock).
     True
-    bandaPosible2([luis,maria,juan],rock).
-    True
     bandaPosible([luis,maria,juan],jazz).
-    False
-    bandaPosible2([luis,maria,juan],jazz).
     False
     */
