@@ -23,8 +23,8 @@ omnipresente(Usuario):-
     forall(usuario(_,Red,_),usuario(Usuario,Red,_)).
     
 exclusivo(Usuario):-
-    influencer(Usuario),
     usuario(Usuario,Red,_),
+    influencer(Usuario),
     not((usuario(Usuario,OtraRed,_),Red \= OtraRed)).
 
 contenido(ana,tiktok,video([beto,evelyn],1)).
@@ -67,3 +67,26 @@ colaboran(Usuario,OtroUsuario):-
 
 colaboracion(Usuario,OtroUsuario):-colaboran(Usuario,OtroUsuario).
 colaboracion(Usuario,OtroUsuario):-colaboran(OtroUsuario,Usuario).
+
+
+% caminoALaFama(Usuario):-
+%     usuario(Usuario,_,_),
+%     not(influencer(Usuario)),
+%     usuario(Influencer,_,_),
+%     influencer(Influencer),
+%     aparecePorColaboracion(Influencer,Usuario).
+
+
+% caminoALaFama(Usuario):-
+%     usuario(Usuario,_,_),
+%     not(influencer(Usuario)),
+%     usuario(Influencer,_,_),
+%     influencer(Influencer),
+%     aparecePorColaboracion(Influencer,Usuario).
+
+% aparecePorColaboracion(Autor,Usuario):-
+%     colaboran(Autor,Usuario).
+
+% aparecerPorColaboracion(Autor,Usuario):-
+%     colaboran(Autor,Intermedio),
+%     aparecePorColaboracion(Intermedio,Usuario).
