@@ -16,7 +16,7 @@ ultimaFecha(Materia,Fecha):-
 
 
 ultimaFecha1(Materia, Fecha) :-
-    fecha(Materia, Fecha),
+    fecha(Materia,Fecha),
     not((fecha(Materia, OtraFecha), OtraFecha > Fecha)).
 
 

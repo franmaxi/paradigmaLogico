@@ -58,6 +58,7 @@ plato(elCuartito,muzza,290).
 
 bodegon(Restaurante):- 
    not((plato(Restaurante,_,Precio),Precio >= 300)). 
+   
 bodegon(Restaurante):- 
    tieneMila(Restaurante). 
 tieneMila(Restaurante):- 
@@ -73,8 +74,8 @@ tieneMila(Restaurante):-
 */
 
 bodegon1(Restaurante):- 
-   plato(Restaurante,mila,_),
-   not((plato(Restaurante,_,Precio),Precio >= 300)).
+    plato(Restaurante,mila,_),
+    not((plato(Restaurante,_,Precio),Precio >= 300)).
 
 
 
@@ -115,7 +116,6 @@ esConocida(Cientifico,Publicacion):-
     publico(Cientifico,Descubrimiento),
     publicacionConocida(Descubrimiento,Publicacion).
 
-
 publicacionConocida(articulo(Publicacion,_),Publicacion):-
     referencias(Publicacion,Referencia),
     Referencia >= 3000.
@@ -127,3 +127,4 @@ publicacionConocida(ensayo(Publicacion),Publicacion):-
 publicacionConocida(Publicacion,Publicacion):-
     referencias(Publicacion,Referencia),
     Referencia >= 3000.
+
