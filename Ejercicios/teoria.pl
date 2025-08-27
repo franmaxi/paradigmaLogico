@@ -72,4 +72,6 @@ findall/3
 Relaciona un individuo o variable, con una consulta y con el conjunto de los individuos que satisfacen la consulta
 
 findall(N, N > 20, masGrandes)
+
+Utilizar functores no implica polimorfismo, pero eventualmente si utilizas functores termines usando polimorfismo
 */

@@ -44,6 +44,7 @@ noEsSustentable2(Persona):-
 viajeNoSustentable(tren(_,_)).
 viajeNoSustentable(avion(_,_,internacional)).
 
+
 noEsSustentable3(Persona):-
   viaja(Persona,_),
   forall(viaja(Persona,Transporte), viajeNoSustentable(Transporte)).
