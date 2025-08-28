@@ -14,8 +14,8 @@ recorrido(24,caba,corrientes).
 % 1
 puedenCombinarse(Linea1,Linea2):-
     recorrido(Linea1,Zona,Calle),
-    recorrido(Linea2,Zona,Calle).
-
+    recorrido(Linea2,Zona,Calle),
+    Linea1 \= Linea2.
 % 2
 
 juridisccion(Linea,nacional,_):- cruzaLaGeneralPaz(Linea).
@@ -50,9 +50,9 @@ pasan3Lineas(Zona,Calle):-
     recorrido(Linea1,Zona,Calle),
     recorrido(Linea2,Zona,Calle),
     recorrido(Linea3,Zona,Calle),
-    Linea1\= Linea2,
-    Linea2\= Linea3,
-    Linea1\= Linea3.
+    Linea1 \= Linea2,
+    Linea2 \= Linea3,
+    Linea1 \= Linea3.
 
     
 % Precio fijo    
@@ -64,19 +64,20 @@ beneficioSube(marta,casosParticulares(caba)).
 % Descuento del 50%
 beneficioSube(marta,jubilado).
 
-valorBoleto(Costo,nacional,_,_):- Costo is 500.
-valorBoleto(Costo,provincial,caba,_):- Costo is 350.
+valorBoleto(500,nacional,_,_).
+valorBoleto(350,provincial,caba,_).
 valorBoleto(Costo,provincial,buenosAires,Linea):- 
     cantidadCallesLinea(Linea,CantidadCalles),
     zonasDiferentes(Linea,Plus),
     Costo is 25 * CantidadCalles + Plus.
 
-zonasDiferentes(Linea,25):-
+zonasDiferentes(Linea,50):-
     recorrido(Linea,gba(Zona1),_),
     recorrido(Linea,gba(Zona2),_),
     Zona1 \= Zona2.
 
 zonasDiferentes(_,0).
+
 cantidadCallesLinea(Linea,Cantidad):-
     recorrido(Linea,_,_),
     findall(C,recorrido(Linea,_,C),Lista),
@@ -87,10 +88,20 @@ costoPorViajarCon(Persona,Linea,CostoBase):-
     valorBoleto(CostoBase,Juridisccion,Provincia,Linea),
     not(beneficioSube(Persona,_)).
 
-costoPorViajarCon(Persona,Linea,CostoFinal):-
+costoPorViajarCon(Persona,Linea,CostoBase):-
     juridisccion(Linea,Juridisccion,Provincia),
     valorBoleto(CostoBase,Juridisccion,Provincia,Linea),
-    aplicarBeneficio(Persona,Linea,CostoBase,CostoFinal).
+    not(esValido(ndasdsadsaddsad,asd,asd,as)).
+
+costoPorViajarCon(Persona,Linea,CostoMinimo):-
+    aplicarBeneficio(Persona,_,_,_),
+    juridisccion(Linea,Juridisccion,Provincia),
+    valorBoleto(CostoBase,Juridisccion,Provincia,Linea),
+    findall(Costo,(
+        aplicarBeneficio(Persona,Linea,CostoBase,Costo)),
+    ListaCostos),
+    min_member(CostoMinimo, ListaCostos).
+
 
 aplicarBeneficio(Persona,_,_,50):-
     beneficioSube(Persona,estudiantil).
@@ -102,6 +113,9 @@ aplicarBeneficio(Persona,Linea,_,0):-
 aplicarBeneficio(Persona,_,CostoBase,CostoMitad):-
     beneficioSube(Persona,jubilado),
     CostoMitad is CostoBase / 2.
+
+
+
 
 % aplicarBeneficio(Persona , _, CostoBase, CostoBase):-
 %     not(beneficioSube(Persona,_)).
